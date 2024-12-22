@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apartment Rental System</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- Custom CSS -->
+  <style>
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .navbar-nav .nav-item {
+      margin-left: 20px;
+    }
+
+    .navbar-nav .nav-link {
+      color: white !important;
+      padding: 10px 15px;
+      position: relative;
+      font-size: 18px;
+      margin-right: 20px;
+    }
+
+    .navbar-nav .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background-color: pink;
+      transition: width 0.3s ease-in-out;
+    }
+
+    .navbar-nav .nav-link:hover::after {
+      width: 100%;
+    }
+
+    body {
+      padding-top: 50px;
+    }
+
+    .apartment-card {
+      margin-bottom: 20px;
+    }
+
+    .header {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .container {
+      margin-top: 30px;
+    }
+
+    .rental-info {
+      margin-top: 20px;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+      margin-top: 20px;
+      display: none; /* Hidden initially */
+    }
+
+    .success-message {
+      color: green;
+      font-weight: bold;
+      margin-top: 20px;
+      display: none; /* Hidden initially */
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .modal-img {
+      width: 100%;
+      height: auto;
+    }
+
+    .modal-img-container {
+      margin-bottom: 15px;
+    }
+
+/* Footer */
+/* Ensure the body and html take up the full height of the page */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Make the body a flex container, which allows the footer to stick to the bottom */
+body {
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px; /* Space for the navbar */
+}
+
+/* Section content should take available space in the middle */
+.container {
+  flex-grow: 1; /* Allow sections to grow and fill space */
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 20px 0;
+  background-color: rgb(9, 104, 248); /* Dark background color */
+  color: #fff; /* White text color */
+  width: 100%;
+}
+
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <a class="navbar-brand" href="#">RenTANA
+        <i class="fa-solid fa-house" style="color:rgb(252, 24, 24);  font-size: 30px;"></i>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="homes.html">Apartment</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="bh.html">Boarding House</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Header Section -->
+  <div class="header">
+    <h1>Welcome to RenTANA</h1>
+    <i class="fa-solid fa-house" style="color:rgb(252, 24, 24);  font-size: 40px;"></i>
+    <p>Find your dream Boarding House today!</p>
+  </div>
+
+  <!-- Apartment Listings Section -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card apartment-card">
+          <img src="img/bh.jpg" class="card-img-top" alt="Apartment 1">
+          <div class="card-body">
+            <h5 class="card-title">1 room with 2 bedroom</h5>
+            <p class="card-text">₱1500 per head/month</p>
+            <button class="btn btn-primary" onclick="openDetailsModal('2 Bedroom', '₱1500 per head/month', ['img/bh.jpg'], 'Spacious 2 bedroom good for 2 person located near the city center with Cr and Kitchen.') ">View Details</button>
+            <button class="btn btn-success" onclick="openRentModal('2 Bedroom ', '₱1500 per head/month')">Rent Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card apartment-card">
+          <img src="img/bh1.jpg" class="card-img-top" alt="Apartment 2">
+          <div class="card-body">
+            <h5 class="card-title">1 room with 4 bedroom</h5>
+            <p class="card-text">₱1200 per head/month</p>
+            <button class="btn btn-primary" onclick="openDetailsModal('4 Bedroom', '1200 per head/month', ['img/bh1.jpg'], 'Cozy 4 bedroom  ideal for family and friends with Cr and Kitchen.')">View Details</button>
+            <button class="btn btn-success" onclick="openRentModal('4 Bedroom', '1200 per head/month')">Rent Now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card apartment-card">
+          <img src="img/bh2.jpg " class="card-img-top" alt="Apartment 3">
+          <div class="card-body">
+            <h5 class="card-title">1 room with 3 bedroom</h5>
+            <p class="card-text">₱1000 per head/month</p>
+            <button class="btn btn-primary" onclick="openDetailsModal('3 Bedroom', '₱1000 per head/month', ['img/bh2.jpg'], 'Spacious 3 bedroom with a great view with Cr and Kitchen.')">View Details</button>
+            <button class="btn btn-success" onclick="openRentModal('3 Bedroom ', '₱1000 per head/month')">Rent Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for View Details -->
+  <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="detailsModalLabel">Apartment Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Image at the top (only one image) -->
+          <div class="modal-img-container" id="modalImages">
+            <!-- Only one image will be inserted here dynamically -->
+            <img id="modalImagePreview" src="img/bg.webp" alt="Apartment Image" class="modal-img">
+          </div>
+
+          <!-- Apartment Details -->
+          <h5 id="apartmentName"></h5>
+          <p id="apartmentPrice"></p>
+          <p id="apartmentDescription"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Rent Now Form -->
+  <div class="modal fade" id="rentModal" tabindex="-1" role="dialog" aria-labelledby="rentModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rentModalLabel">Rent Apartment</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="rentForm">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="form-group">
+              <label for="period">Rental Period</label>
+              <select class="form-control" id="period" required>
+                <option value="6 months">6 months</option>
+                <option value="1 year">1 year</option>
+                <option value="2 years">2 years</option>
+                <option value="more">Prefer Not to Say</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Rental Application</button>
+          </form>
+          <div class="spinner" id="spinner"></div>
+          <div class="success-message" id="successMessage">Rental Submitted Successfully!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <p>&copy; 2024 ApartmentRental, All Rights Reserved</p>
+  </footer>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <!-- JavaScript for handling modals -->
+  <script>
+    function openDetailsModal(apartment, price, images, description) {
+      // Update modal content
+      document.getElementById('apartmentName').innerText = apartment;
+      document.getElementById('apartmentPrice').innerText = price;
+      document.getElementById('apartmentDescription').innerText = description;
+
+      // Display only the first image
+      const modalImagePreview = document.getElementById('modalImagePreview');
+      modalImagePreview.src = images[0];  // Set the first image
+
+      // Open the modal
+      $('#detailsModal').modal('show');
+    }
+
+    function openRentModal(apartment, price) {
+      // Set rental details in the modal
+      document.getElementById('rentModalLabel').innerText = 'Rent ' + apartment;
+      // Open the modal
+      $('#rentModal').modal('show');
+    }
+
+    // Function to handle form submission with spinner and success message
+    document.getElementById('rentForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent actual form submission
+
+      // Show the spinner animation
+      document.getElementById('spinner').style.display = 'block';
+
+      // Simulate form submission (you can replace this with actual AJAX call)
+      setTimeout(function() {
+        // Hide the spinner after 2 seconds (simulating the submission process)
+        document.getElementById('spinner').style.display = 'none';
+
+        // Show the success message
+        document.getElementById('successMessage').style.display = 'block';
+
+        // Optionally, hide the success message after 3 seconds
+        setTimeout(function() {
+          document.getElementById('successMessage').style.display = 'none';
+          $('#rentModal').modal('hide'); // Hide the rent modal after submission
+        }, 3000);
+      }, 2000); // Simulate a 2-second submission process
+    });
+  </script>
+
+</body>
+</html>
